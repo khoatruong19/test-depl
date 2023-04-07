@@ -10,8 +10,37 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-model Example {
+model Recipe {
     id        String   @id @default(cuid())
+    name  String @db.VarChar(255)
+    tags  String @db.VarChar(255)
+    ingredients  String @db.MediumText()
+    intructions  String @db.LongText()
+    image   String @db.MediumText()
+    ratings Rating[]
+    comments Comment[]
+    authorId String
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+
+    @@index([authorId])
+}
+
+model Rating{
+    id   String   @id @default(cuid())
+    value Int @db.Int()
+    createdAt DateTime @default(now())
+    recipeId String
+    recipe    Recipe @relation(fields: [recipeId], references: [id])
+    authorId String
+    @@index([authorId])
+}
+
+model Comment{
+    id   String   @id @default(cuid())
+    content String @db.TinyText()
+    createdAt DateTime @default(now())
+    recipeId String
+    recipe    Recipe @relation(fields: [recipeId], references: [id])
+    authorId String
+    @@index([authorId])
 }
