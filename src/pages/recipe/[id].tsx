@@ -7,18 +7,32 @@ import { generateSSGHelper } from '~/server/helpers/ssgHelper'
 import { api } from '~/utils/api'
 import AppLayout from '~/components/layout'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import dynamic from 'next/dynamic'
+import { useTranslation } from 'next-i18next'
 
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+});
 interface IProps{
     id: string
 }
 
 const RecipeDetail = ({id}: IProps) => {
+  const { t } = useTranslation();
+
     const { data } = api.recipe.getById.useQuery({
         id,
       });
       if (!data) return <div>404 NOT FOUND</div>;
   return (
-    <AppLayout>{JSON.stringify(data)}</AppLayout>
+    <AppLayout>
+      <h1 className="mb-5 text-center text-3xl font-bold">{data.name}</h1>
+      <h3 className="text-xl font-semibold">{t('ingrediens')}:</h3>
+      <ReactQuill
+    value={data.intructions}
+    readOnly={true}
+    theme={"bubble"}
+ /></AppLayout>
   )
 }
 
