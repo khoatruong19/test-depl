@@ -1,3 +1,70 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+*{
+    font-family: 'Playfair Display', serif;;
+}
+
+body{
+    background: url("../assets/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+img{
+    position: absoltute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+input{
+    outline: none;
+}
+
+.DraftEditor-editorContainer {min-height: 300px;}
+
+.img-container{
+    position: relative;
+    overflow: hidden;
+}
+
+.react-tagsinput{
+    flex: 1 !important;
+    width: 100% !important;
+    border-radius: 5px !important;
+}
+
+.react-tagsinput.black{
+    border-color: #172933 !important;
+}
+
+.react-tagsinput.red{
+    border-color: #E25F48 !important;
+}
+
+.react-tagsinput-input{
+    width: 100px !important;
+    outline: none !important;
+    border-color: #172933 !important;
+}
+
+.react-tagsinput-tag{
+    background: #172933 !important;
+    color: white !important;
+}
+
+.ql-editor{
+    min-height: 400px;
+}
+
+@layer components {
+    .button-container {
+        @apply p-2 px-4 border-orange-500 border-2 rounded-xl font-semibold hover:bg-orange-400 cursor-pointer ;
+    }
+}

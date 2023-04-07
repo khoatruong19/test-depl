@@ -7,7 +7,7 @@ import Head from "next/head";
 
 import { useTranslation } from "next-i18next";
 import AppLayout from "~/components/layout";
-// import RecipeList from "~/components/recipelist";
+import RecipeList from "~/components/recipelist";
 import { api } from "~/utils/api";
 
 const Home: NextPage = (props) => {
@@ -22,7 +22,7 @@ const Home: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppLayout>
-        {/* <RecipeList data={data} isLoading={isLoading} listTitle={t('recipesResult')}/> */}
+        <RecipeList data={data} isLoading={isLoading} listTitle={t('recipesResult')}/>
       </AppLayout>
     </>
   );
