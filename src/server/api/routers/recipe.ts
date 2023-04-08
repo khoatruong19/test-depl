@@ -89,7 +89,7 @@ export const recipeRouter = createTRPCRouter({
       return { ...item, ratings: Math.round(averageRating * 2) / 2 };
     });
 
-    return orderBy === "rating" ? recipesWithRatings.sort((a,b) => (b.ratings - a.ratings)) : recipesWithRatings;
+    return orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings;
   }),
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
