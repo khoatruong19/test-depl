@@ -27,6 +27,7 @@ const RecipeDetail = ({id}: IProps) => {
   return (
     <AppLayout>
       <h1 className="mb-5 text-center text-3xl font-bold">{data.name}</h1>
+      <p>{data.author.username}</p>
       <h3 className="text-xl font-semibold">{t('ingrediens')}:</h3>
       <ReactQuill
     value={data.intructions}

@@ -18,9 +18,9 @@ interface IProps {
 
 const Navbar = ({ toggleLanguage }: IProps) => {
   const user = useUser();
+  console.log({user})
   const router = useRouter();
   const { t } = useTranslation("common");
-
   return (
     <div className="flex h-24 items-center justify-between">
       <div className="flex items-center gap-10">

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
 import { api } from "~/utils/api";
+import { useUser } from "@clerk/nextjs";
 
 const MyEditor = dynamic(() => import("../components/myeditor"), {
   ssr: false,
@@ -20,6 +21,7 @@ const MyEditor = dynamic(() => import("../components/myeditor"), {
 const CreateRecipe = () => {
   const { t } = useTranslation();
   const createRecipe = api.recipe.create.useMutation()
+  const { user } = useUser();
 
   const router = useRouter();
   const [tags, setTags] = useState([]);
@@ -41,12 +43,14 @@ const CreateRecipe = () => {
 
   const handleCreateRecipe = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(!user) return alert("Not authenticated")
     createRecipe.mutate({
       name,
       tags: tags.join(";"),
       image,
       ingredients,
-      intructions
+      intructions,
+      authorId: user.id
     },
     {onSuccess: (data) => console.log({data})})
   }

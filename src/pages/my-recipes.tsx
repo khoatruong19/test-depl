@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/nextjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import AppLayout from "~/components/layout";
@@ -7,6 +8,7 @@ const MyRecipes = () => {
 };
 
 export async function getStaticProps({ locale }: { locale: string }) {
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
