@@ -27,8 +27,6 @@ input{
     outline: none;
 }
 
-.DraftEditor-editorContainer {min-height: 300px;}
-
 .img-container{
     position: relative;
     overflow: hidden;
@@ -59,8 +57,12 @@ input{
     color: white !important;
 }
 
-.ql-editor{
+.text-editor .ql-editor{
     min-height: 400px;
+}
+
+.ql-align-center{
+    text-align: center;
 }
 
 @layer components {

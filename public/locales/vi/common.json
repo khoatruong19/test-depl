@@ -18,9 +18,13 @@
     "createNewRecipe": "Tạo công thức mới",
     "recipeImage": "Hình minh họa công thức",
     "recipeName": "Tên công thức",
-    "ingrediens": "Nguyên liệu",
+    "ingredients": "Nguyên liệu",
     "intructions": "Hướng dẫn",
     "createLabel": "Tạo",
     "recipeNamePlaceholder": "Tên công thức...",
-    "recipeIngredientsPlaceholder": "Nguyên liệu công thức..."
+    "recipeIngredientsPlaceholder": "Nguyên liệu công thức...",
+    "ratings": "Đánh giá",
+    "submit": "Gửi",
+    "comments": "Bình luận",
+    "commentPlaceholder": "Bạn nghĩ gì..."
 }

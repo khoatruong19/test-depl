@@ -18,9 +18,13 @@
     "createNewRecipe": "Create New Recipe",
     "recipeImage": "Recipe Image",
     "recipeName": "Recipe Name",
-    "ingrediens": "Ingredients",
-    "intructions": "Intructions",
+    "ingredients": "Ingredients",
+    "intructions": "Intruction",
     "createLabel": "Create",
     "recipeNamePlaceholder": "Recipe name...",
-    "recipeIngredientsPlaceholder": "Recipe ingredients..."
+    "recipeIngredientsPlaceholder": "Recipe ingredients...",
+    "ratings": "Ratings",
+    "submit": "Submit",
+    "comments": "Comments",
+    "commentPlaceholder": "Write your comment..."
 }

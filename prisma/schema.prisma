@@ -27,7 +27,7 @@ model Recipe {
 
 model Rating{
     id   String   @id @default(cuid())
-    value Int @db.Int()
+    value Float @db.Float()
     createdAt DateTime @default(now())
     recipeId String
     recipe    Recipe @relation(fields: [recipeId], references: [id])

@@ -89,7 +89,7 @@ const CreateRecipe = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-xl font-semibold">{t('ingrediens')}:</label>
+            <label className="text-xl font-semibold">{t('ingredients')}:</label>
             <textarea
               rows={4}
               onBlur={(e) =>

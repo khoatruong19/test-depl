@@ -90,6 +90,7 @@ const MyEditor = ({data, setData}: IProps) => {
 
   return (
     <ReactQuill
+    className="text-editor"
     ref={quillRef}
       theme="snow"
       modules={modules}

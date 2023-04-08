@@ -17,7 +17,7 @@ const RecipeCard = ({ recipe }: IProps) => {
     <Link href={`/recipe/${recipe.id}`}>
       <div className="group z-[9999] w-[100%] cursor-pointer">
         <div className="relative flex items-center justify-center rounded-2xl border-2  border-secondaryColor/50 px-3 py-6">
-          <div className="z-1 img-container h-[200px] w-[200px] group-hover:scale-110">
+          <div className="z-1 img-container h-[200px] w-[200px] group-hover:scale-110 rounded-md">
             <img src={recipe.image ?? Pizza} alt="" />
           </div>
           <div className="absolute right-4 top-4 rounded-3xl bg-secondaryColor/50 p-3 hover:bg-secondaryColor">

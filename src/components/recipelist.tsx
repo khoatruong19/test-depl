@@ -1,8 +1,7 @@
 import React from "react";
-// import RecipeFilter from "./recipefilter";
+import RecipeFilter from "./recipefilter";
 import { useTranslation } from "next-i18next";
 import RecipeCard from "./recipecard";
-import { Recipe } from "@prisma/client";
 import { RecipeWithRatings } from "~/types/recipe.type";
 import { SyncLoading } from "./loaders";
 interface IProps {
@@ -22,7 +21,7 @@ const RecipeList = (props: IProps) => {
           <h1 className="mb-2 text-3xl font-semibold">{listTitle}</h1>
           <p className="font-medium text-gray-600">326 {t("recipesFound")}</p>
         </div>
-        {/* <RecipeFilter /> */}
+        <RecipeFilter />
       </div>
       {isLoading && <SyncLoading />}
       <div className="mt-10 grid grid-cols-3 gap-x-8 gap-y-10">
