@@ -26,5 +26,10 @@
     "ratings": "Ratings",
     "submit": "Submit",
     "comments": "Comments",
-    "commentPlaceholder": "Write your comment..."
+    "commentPlaceholder": "Write your comment...",
+    "createCommentSuccessfully": "Comment successfully",
+    "deleteCommentSuccessfully": "Comment deleted",
+    "rateSuccessfully": "Rate successfully",
+    "createRecipeSuccessfully": "Recipe created successfully",
+    "notAuthenticated": "Not authenticated. Please login if you haven't yet"
 }

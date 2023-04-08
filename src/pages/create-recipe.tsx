@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { api } from "~/utils/api";
 import { useUser } from "@clerk/nextjs";
+import { toast } from "react-toastify";
 
 const MyEditor = dynamic(() => import("../components/myeditor"), {
   ssr: false,
@@ -52,7 +53,8 @@ const CreateRecipe = () => {
       intructions,
       authorId: user.id
     },
-    {onSuccess: (data) => console.log({data})})
+    {onSuccess: () => 
+    toast.success(t("createRecipeSuccessfully"))})
   }
   return (
     <AppLayout>

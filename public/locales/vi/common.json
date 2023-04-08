@@ -26,5 +26,11 @@
     "ratings": "Đánh giá",
     "submit": "Gửi",
     "comments": "Bình luận",
-    "commentPlaceholder": "Bạn nghĩ gì..."
+    "commentPlaceholder": "Bạn nghĩ gì...",
+    "createCommentSuccessfully": "Đã thêm bình luận",
+    "deleteCommentSuccessfully": "Đã xóa bình luận",
+    "rateSuccessfully": "Đánh giá thành công",
+    "createRecipeSuccessfully": "Tạo công thức thành công",
+    "notAuthenticated": "Xác thực thất bại. Hãy đăng nhập nếu chưa"
+
 }

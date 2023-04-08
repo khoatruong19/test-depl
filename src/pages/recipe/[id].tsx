@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useRef, useState } from "react";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { generateSSGHelper } from "~/server/helpers/ssgHelper";
-import { api } from "~/utils/api";
-import AppLayout from "~/components/layout";
+import { useUser } from "@clerk/nextjs";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Comment } from "@prisma/client";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
+import React, { useRef, useState } from "react";
 import ReactStars from "react-rating-stars-component";
-import { useUser } from "@clerk/nextjs";
+import AppLayout from "~/components/layout";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import { api } from "~/utils/api";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -31,18 +35,15 @@ const RecipeDetail = ({ id }: IProps) => {
     recipeId: id,
   });
   const { mutate: commentMutate } = api.comment.create.useMutation();
-  const { mutate: ratingMutate } = api.rating.create.useMutation({
-    async onSettled() {
-        await ctx.recipe.getById.invalidate({id});
-    },
-  });
+  const { mutate: deleteCommentMutate } = api.comment.delete.useMutation();
+  const { mutate: ratingMutate } = api.rating.create.useMutation();
 
   const commentInputRef = useRef(null);
   const [ratings, setRatings] = useState(0);
 
   const handleSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isSignedIn) alert("Not authenticated!");
+    if (!isSignedIn) return toast.error(t("notAuthenticated"));
     if (
       commentInputRef &&
       commentInputRef.current &&
@@ -56,7 +57,8 @@ const RecipeDetail = ({ id }: IProps) => {
         },
         {
           onSuccess: () => {
-            alert("Commented");
+            void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+            toast.success(t("createCommentSuccessfully"));
             commentInputRef.current.value = "";
           },
         }
@@ -64,16 +66,33 @@ const RecipeDetail = ({ id }: IProps) => {
     }
   };
   const handleSubmitRating = () => {
-    if (!isSignedIn) alert("Not authenticated!");
+    if (!isSignedIn) return toast.error(t("notAuthenticated"));
     ratingMutate(
       { authorId: user?.id!, value: ratings, recipeId: id },
       {
         onSuccess: () => {
-          alert("Rated");
+          void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+          toast.success(t("rateSuccessfully"));
         },
         onError: (error) => {
-          alert(error)
-        }
+          alert(error);
+        },
+      }
+    );
+  };
+  const handleDeleteComment = (comment: Comment) => {
+    if (!isSignedIn || user.id !== comment.authorId)
+      return toast.error(t("notAuthenticated"));
+    deleteCommentMutate(
+      { id: comment.id },
+      {
+        onSuccess: () => {
+          void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+          toast.warning(t("deleteCommentSuccessfully"));
+        },
+        onError: (error) => {
+          alert(error);
+        },
       }
     );
   };
@@ -86,7 +105,9 @@ const RecipeDetail = ({ id }: IProps) => {
           <img alt="recipe-author-avatar" src={recipe.author.profileImageUrl} />
         </div>
         <p className="font-semibold">{recipe.author.username}</p>
-        <p className="text-sm">{recipe.createdAt.toDateString()}</p>
+        <p className="text-sm">
+          {dayjs(recipe.createdAt).format("DD/MM/YYYY")}
+        </p>
         <ReactStars
           count={5}
           value={recipe.ratings}
@@ -99,7 +120,7 @@ const RecipeDetail = ({ id }: IProps) => {
           activeColor="#ffd700"
         />
       </div>
-      <div className="mb-4">
+      <div className="img-container mb-4 h-[700px] w-[100%]">
         <img alt="recipe-img" src={recipe.image} />
       </div>
       <div className="mb-3 flex flex-col gap-1">
@@ -167,7 +188,7 @@ const RecipeDetail = ({ id }: IProps) => {
           {comments &&
             comments.map((comment) => (
               <div
-                className="mb-1 flex items-start gap-3 rounded-md border border-secondaryColor p-2 pb-1"
+                className="relative mb-1 flex items-start gap-3 rounded-md border border-secondaryColor p-2 pb-1"
                 key={comment.id}
               >
                 <div className="img-container h-8 w-8 rounded-full">
@@ -181,10 +202,18 @@ const RecipeDetail = ({ id }: IProps) => {
                     {comment.author.username}
                   </p>
                   <p className="mt-[-3px] text-xs">
-                    {comment.createdAt.toDateString()}
+                    {dayjs(comment.createdAt).format("DD/MM/YYYY h:mm A")}
                   </p>
                   <p>{comment.content}</p>
                 </div>
+                {user && user.id === comment.authorId && (
+                  <div
+                    onClick={() => handleDeleteComment(comment)}
+                    className="absolute right-2 top-1 cursor-pointer text-red-400 hover:text-red-600 "
+                  >
+                    <XMarkIcon className="h-5 w-5" />
+                  </div>
+                )}
               </div>
             ))}
         </div>
@@ -202,9 +231,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
+      ...(await serverSideTranslations(context.locale!, ["common"])),
       trpcState: ssg.dehydrate(),
       id,
-      ...(await serverSideTranslations(context.locale!, ["common"])),
     },
   };
 };
