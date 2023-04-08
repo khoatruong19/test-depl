@@ -140,4 +140,49 @@ export const recipeRouter = createTRPCRouter({
 
       return recipe;
     }),
+    getAllByUser: publicProcedure.input(z.object({
+      authorId: z.string().default(""),
+      skip: z.number().default(0),
+      take: z.number().default(10),
+      orderBy: z.string().default("createdAt"),
+      filterByName: z.string().default(""),
+      filterByTags: z.string().default(""),
+    })).query(async ({ ctx, input }) => {
+      const {filterByName,filterByTags,orderBy,skip,take, authorId} = input
+      const recipes = await ctx.prisma.recipe.findMany({
+        take: take,
+        skip: skip,
+        where:{
+          authorId,
+          name:{
+            contains: filterByName
+          },
+          tags:{
+            contains: filterByTags
+          }
+        },
+        orderBy: {
+          createdAt: 'desc' 
+        },
+        include: {
+          ratings: {
+            select: {
+              value: true,
+            },
+          },
+          _count: {
+            select: {
+              ratings: true,
+            },
+          },
+        },
+      });
+  
+      const recipesWithRatings = _.map(recipes, (item) => {
+        const averageRating = getAverageRating(item);
+        return { ...item, ratings: Math.round(averageRating * 2) / 2 };
+      });
+  
+      return orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings;
+    }),
 });

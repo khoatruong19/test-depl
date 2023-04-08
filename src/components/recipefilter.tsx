@@ -35,7 +35,7 @@ const RecipeFilter = () => {
   const handleFilterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setOpenFilter(false)
-    push({ pathname: "/", query: { ...query, name: recipeName, tags: tags.join(";") , orderBy: sortByRating ? 'rating' : 'createdAt'} }, undefined, {
+    push({ query: { ...query, name: recipeName, tags: tags.join(";") , orderBy: sortByRating ? 'rating' : 'createdAt'} }, undefined, {
       shallow: true,
     });
   };

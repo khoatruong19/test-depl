@@ -57,7 +57,7 @@ const RecipeDetail = ({ id }: IProps) => {
         },
         {
           onSuccess: () => {
-            void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+            void ctx.comment.getAllByRecipeId.invalidate({recipeId: id})
             toast.success(t("createCommentSuccessfully"));
             commentInputRef.current.value = "";
           },
@@ -71,7 +71,7 @@ const RecipeDetail = ({ id }: IProps) => {
       { authorId: user?.id!, value: ratings, recipeId: id },
       {
         onSuccess: () => {
-          void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+          void ctx.comment.getAllByRecipeId.invalidate({recipeId: id})
           toast.success(t("rateSuccessfully"));
         },
         onError: (error) => {
@@ -87,7 +87,7 @@ const RecipeDetail = ({ id }: IProps) => {
       { id: comment.id },
       {
         onSuccess: () => {
-          void ctx.comment.getAllByRecipeId.invalidate({ recipeId: id });
+          void ctx.comment.getAllByRecipeId.invalidate({recipeId: id})
           toast.warning(t("deleteCommentSuccessfully"));
         },
         onError: (error) => {
@@ -228,7 +228,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id;
 
   await ssg.recipe.getById.prefetch({ id: `${id as string}` });
-
+  
   return {
     props: {
       ...(await serverSideTranslations(context.locale!, ["common"])),
