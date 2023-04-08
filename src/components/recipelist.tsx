@@ -1,9 +1,8 @@
-import React from "react";
-import RecipeFilter from "./recipefilter";
 import { useTranslation } from "next-i18next";
-import RecipeCard from "./recipecard";
 import { RecipeWithRatings } from "~/types/recipe.type";
 import { SyncLoading } from "./loaders";
+import RecipeCard from "./recipecard";
+import RecipeFilter from "./recipefilter";
 interface IProps {
   listTitle: string;
   data?: RecipeWithRatings[];

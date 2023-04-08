@@ -33,7 +33,7 @@ const RecipeDetail = ({ id }: IProps) => {
   const { mutate: commentMutate } = api.comment.create.useMutation();
   const { mutate: ratingMutate } = api.rating.create.useMutation({
     async onSettled() {
-      await ctx.recipe.getById.invalidate({id});
+        await ctx.recipe.getById.invalidate({id});
     },
   });
 
@@ -71,6 +71,9 @@ const RecipeDetail = ({ id }: IProps) => {
         onSuccess: () => {
           alert("Rated");
         },
+        onError: (error) => {
+          alert(error)
+        }
       }
     );
   };
@@ -164,7 +167,7 @@ const RecipeDetail = ({ id }: IProps) => {
           {comments &&
             comments.map((comment) => (
               <div
-                className="mb-1 flex items-start gap-3 rounded-md border border-secondaryColor p-2"
+                className="mb-1 flex items-start gap-3 rounded-md border border-secondaryColor p-2 pb-1"
                 key={comment.id}
               >
                 <div className="img-container h-8 w-8 rounded-full">

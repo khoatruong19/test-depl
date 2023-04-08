@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { z } from "zod";
-import _ from "lodash";
+import _, { orderBy } from "lodash";
 import { clerkClient } from "@clerk/nextjs/server";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { Recipe } from "@prisma/client";
@@ -48,8 +48,28 @@ const addUserDataToRecipes = async (recipes: RatingWithRatings[]) => {
 };
 
 export const recipeRouter = createTRPCRouter({
-  getAll: publicProcedure.query(async ({ ctx }) => {
+  getAll: publicProcedure.input(z.object({
+    skip: z.number().default(0),
+    take: z.number().default(10),
+    orderBy: z.string().default("createdAt"),
+    filterByName: z.string().default(""),
+    filterByTags: z.string().default(""),
+  })).query(async ({ ctx, input }) => {
+    const {filterByName,filterByTags,orderBy,skip,take} = input
     const recipes = await ctx.prisma.recipe.findMany({
+      take: take,
+      skip: skip,
+      where:{
+        name:{
+          contains: filterByName
+        },
+        tags:{
+          contains: filterByTags
+        }
+      },
+      orderBy: {
+        createdAt: 'desc' 
+      },
       include: {
         ratings: {
           select: {
@@ -69,7 +89,7 @@ export const recipeRouter = createTRPCRouter({
       return { ...item, ratings: Math.round(averageRating * 2) / 2 };
     });
 
-    return recipesWithRatings;
+    return orderBy === "rating" ? recipesWithRatings.sort((a,b) => (b.ratings - a.ratings)) : recipesWithRatings;
   }),
   getById: publicProcedure
     .input(z.object({ id: z.string() }))

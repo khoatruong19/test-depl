@@ -9,11 +9,16 @@ import { useTranslation } from "next-i18next";
 import AppLayout from "~/components/layout";
 import RecipeList from "~/components/recipelist";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 
 const Home: NextPage = (props) => {
-  const { t } = useTranslation('common');
-  const {data, isLoading, error} = api.recipe.getAll.useQuery();
-  console.log({data})
+  const { t } = useTranslation("common");
+  const router = useRouter();
+  const { data, isLoading, error } = api.recipe.getAll.useQuery({
+    orderBy: (router.query.orderBy as string) ?? "createdAt",
+    filterByTags: (router.query.tags as string) ?? "",
+    filterByName: (router.query.name as string) ?? "",
+  });
   return (
     <>
       <Head>
@@ -22,14 +27,17 @@ const Home: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppLayout>
-        <RecipeList data={data} isLoading={isLoading} listTitle={t('recipesResult')}/>
+        <RecipeList
+          data={data}
+          isLoading={isLoading}
+          listTitle={t("recipesResult")}
+        />
       </AppLayout>
     </>
   );
 };
 
-
-export async function getStaticProps({ locale }: { locale: string }) {  
+export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
