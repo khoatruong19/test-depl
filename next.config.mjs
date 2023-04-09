@@ -7,6 +7,7 @@
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
 
 /** @type {import("next").NextConfig} */
+import path from "path";
 const config = {
   reactStrictMode: true,
 
@@ -19,6 +20,7 @@ const config = {
   i18n: {
     locales: ["en", "vi"],
     defaultLocale: "en",
+    localePath: path.resolve('./public/locales')
   },
   typescript: {
     ignoreBuildErrors: true,
