@@ -56,6 +56,16 @@ export const recipeRouter = createTRPCRouter({
     filterByTags: z.string().default(""),
   })).query(async ({ ctx, input }) => {
     const {filterByName,filterByTags,orderBy,skip,take} = input
+    const recipesCount = await ctx.prisma.recipe.count({
+      where:{
+        name:{
+          contains: filterByName
+        },
+        tags:{
+          contains: filterByTags
+        }
+      },
+    })
     const recipes = await ctx.prisma.recipe.findMany({
       take: take,
       skip: skip,
@@ -71,6 +81,11 @@ export const recipeRouter = createTRPCRouter({
         createdAt: 'desc' 
       },
       include: {
+        saves:{
+          select:{
+            authorId: true
+          }
+        },
         ratings: {
           select: {
             value: true,
@@ -89,7 +104,12 @@ export const recipeRouter = createTRPCRouter({
       return { ...item, ratings: Math.round(averageRating * 2) / 2 };
     });
 
-    return orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings;
+    const result = {
+      recipes: orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings,
+      recipesCount
+    }
+
+    return result;
   }),
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
@@ -99,6 +119,11 @@ export const recipeRouter = createTRPCRouter({
           id: input.id,
         },
         include: {
+          saves:{
+            select:{
+              authorId: true
+            }
+          },
           ratings: {
             select: {
               value: true,
@@ -149,6 +174,17 @@ export const recipeRouter = createTRPCRouter({
       filterByTags: z.string().default(""),
     })).query(async ({ ctx, input }) => {
       const {filterByName,filterByTags,orderBy,skip,take, authorId} = input
+      const recipesCount = await ctx.prisma.recipe.count({
+        where:{
+          authorId,
+          name:{
+            contains: filterByName
+          },
+          tags:{
+            contains: filterByTags
+          }
+        },
+      })
       const recipes = await ctx.prisma.recipe.findMany({
         take: take,
         skip: skip,
@@ -183,6 +219,11 @@ export const recipeRouter = createTRPCRouter({
         return { ...item, ratings: Math.round(averageRating * 2) / 2 };
       });
   
-      return orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings;
+      const result = {
+        recipes: orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings,
+        recipesCount
+      }
+  
+      return result;
     }),
 });

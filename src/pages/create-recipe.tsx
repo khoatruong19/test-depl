@@ -53,8 +53,15 @@ const CreateRecipe = () => {
       intructions,
       authorId: user.id
     },
-    {onSuccess: () => 
-    toast.success(t("createRecipeSuccessfully"))})
+    {onSuccess: () => {
+      setTags([])
+      setIngredients("")
+      setName("")
+      setImage("")
+      setInstructions("")
+      toast.success(t("createRecipeSuccessfully"))
+    }
+    })
   }
   return (
     <AppLayout>

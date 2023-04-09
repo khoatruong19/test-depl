@@ -1,7 +1,9 @@
 {
     "hello": "Hello",
     "test": "Testing",
-    "myRecipe": "My Recipe",
+    "myRecipes": "My Recipes",
+    "savedRecipes": "Saved Recipes",
+    "all": "All",
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "recipesResult": "Recipes Results",
@@ -31,5 +33,7 @@
     "deleteCommentSuccessfully": "Comment deleted",
     "rateSuccessfully": "Rate successfully",
     "createRecipeSuccessfully": "Recipe created successfully",
-    "notAuthenticated": "Not authenticated. Please login if you haven't yet"
+    "notAuthenticated": "Not authenticated. Please login if you haven't yet",
+    "recipeSaved": "Recipe saved",
+    "recipeUnSaved": "Recipe unsaved"
 }

@@ -1,7 +1,9 @@
 {
     "hello": "Xin chào",
     "test": "Vl luon",
-    "myRecipe": "Công thức của bạn",
+    "myRecipes": "Công thức của bạn",
+    "savedRecipes": "Công thức đã lưu",
+    "all": "Tất cả",
     "signIn": "Đăng nhập",
     "signOut": "Đăng xuất",
     "recipesResult": "Công thức tìm thấy",
@@ -31,6 +33,7 @@
     "deleteCommentSuccessfully": "Đã xóa bình luận",
     "rateSuccessfully": "Đánh giá thành công",
     "createRecipeSuccessfully": "Tạo công thức thành công",
-    "notAuthenticated": "Xác thực thất bại. Hãy đăng nhập nếu chưa"
-
+    "notAuthenticated": "Xác thực thất bại. Hãy đăng nhập nếu chưa",
+    "recipeSaved": "Đã lưu công thức",
+    "recipeUnSaved": "Bỏ lưu công thức"
 }

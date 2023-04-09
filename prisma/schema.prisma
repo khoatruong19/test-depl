@@ -19,12 +19,12 @@ model Recipe {
     image   String @db.MediumText()
     ratings Rating[]
     comments Comment[]
+    saves SaveRecipes[]
     authorId String
     createdAt DateTime @default(now())
 
     @@index([authorId])
 }
-
 model Rating{
     id   String   @id @default(cuid())
     value Float @db.Float()
@@ -38,6 +38,14 @@ model Rating{
 model Comment{
     id   String   @id @default(cuid())
     content String @db.TinyText()
+    createdAt DateTime @default(now())
+    recipeId String
+    recipe    Recipe @relation(fields: [recipeId], references: [id])
+    authorId String
+    @@index([authorId])
+}
+model SaveRecipes {
+    id   String   @id @default(cuid())
     createdAt DateTime @default(now())
     recipeId String
     recipe    Recipe @relation(fields: [recipeId], references: [id])

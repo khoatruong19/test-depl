@@ -32,7 +32,7 @@ const Navbar = ({ toggleLanguage }: IProps) => {
         </div>
         {user.isSignedIn && (
           <div className="flex items-center gap-3">
-            <NavItem path="/my-recipes" text={t("myRecipe") ?? ""} />
+            <NavItem path="/my-recipes" text={t("myRecipes") ?? ""} />
             <NavItem path="/create-recipe" text={t("createRecipe") ?? ""} />
           </div>
         )}
