@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 import AppLayout from "~/components/layout";
 import TagsInput from "react-tagsinput";
@@ -30,6 +30,7 @@ const CreateRecipe = () => {
   const [name, setName] = useState("")
   const [ingredients, setIngredients] = useState("")
   const [intructions, setInstructions] = useState("")
+  const textAreaRef = useRef(null)
 
   const handleUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
@@ -44,7 +45,8 @@ const CreateRecipe = () => {
 
   const handleCreateRecipe = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(!user) return alert("Not authenticated")
+    if(!user) return toast.error(t("notAuthenticated"))
+    if(!name || !tags || !image || !ingredients || !intructions) return toast.error(t("fillAll"))
     createRecipe.mutate({
       name,
       tags: tags.join(";"),
@@ -55,7 +57,7 @@ const CreateRecipe = () => {
     },
     {onSuccess: () => {
       setTags([])
-      setIngredients("")
+      textAreaRef.current.value = ""
       setName("")
       setImage("")
       setInstructions("")
@@ -100,6 +102,7 @@ const CreateRecipe = () => {
           <div className="flex flex-col gap-2">
             <label className="text-xl font-semibold">{t('ingredients')}:</label>
             <textarea
+            ref={textAreaRef}
               rows={4}
               onBlur={(e) =>
                 setIngredients(e.target.value.replace(/(?:\r\n|\r|\n)/g, ";"))

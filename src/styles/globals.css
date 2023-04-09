@@ -66,11 +66,18 @@ input{
 }
 
 .text-editor .ql-editor{
-    min-height: 400px;
+    min-height: 200px;
+    max-height:  700px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .ql-align-center{
     text-align: center;
+}
+
+h3 .ql-size-large{
+    font-size: 1.3rem;
 }
 
 @layer components {

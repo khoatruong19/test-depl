@@ -48,69 +48,76 @@ const addUserDataToRecipes = async (recipes: RatingWithRatings[]) => {
 };
 
 export const recipeRouter = createTRPCRouter({
-  getAll: publicProcedure.input(z.object({
-    skip: z.number().default(0),
-    take: z.number().default(10),
-    orderBy: z.string().default("createdAt"),
-    filterByName: z.string().default(""),
-    filterByTags: z.string().default(""),
-  })).query(async ({ ctx, input }) => {
-    const {filterByName,filterByTags,orderBy,skip,take} = input
-    const recipesCount = await ctx.prisma.recipe.count({
-      where:{
-        name:{
-          contains: filterByName
-        },
-        tags:{
-          contains: filterByTags
-        }
-      },
-    })
-    const recipes = await ctx.prisma.recipe.findMany({
-      take: take,
-      skip: skip,
-      where:{
-        name:{
-          contains: filterByName
-        },
-        tags:{
-          contains: filterByTags
-        }
-      },
-      orderBy: {
-        createdAt: 'desc' 
-      },
-      include: {
-        saves:{
-          select:{
-            authorId: true
-          }
-        },
-        ratings: {
-          select: {
-            value: true,
+  getAll: publicProcedure
+    .input(
+      z.object({
+        skip: z.number().default(0),
+        take: z.number().default(10),
+        orderBy: z.string().default("createdAt"),
+        filterByName: z.string().default(""),
+        filterByTags: z.string().default(""),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { filterByName, filterByTags, orderBy, skip, take } = input;
+      const recipesCount = await ctx.prisma.recipe.count({
+        where: {
+          name: {
+            contains: filterByName,
+          },
+          tags: {
+            contains: filterByTags,
           },
         },
-        _count: {
-          select: {
-            ratings: true,
+      });
+      const recipes = await ctx.prisma.recipe.findMany({
+        take: take,
+        skip: skip,
+        where: {
+          name: {
+            contains: filterByName,
+          },
+          tags: {
+            contains: filterByTags,
           },
         },
-      },
-    });
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          saves: {
+            select: {
+              authorId: true,
+            },
+          },
+          ratings: {
+            select: {
+              value: true,
+            },
+          },
+          _count: {
+            select: {
+              ratings: true,
+            },
+          },
+        },
+      });
 
-    const recipesWithRatings = _.map(recipes, (item) => {
-      const averageRating = getAverageRating(item);
-      return { ...item, ratings: Math.round(averageRating * 2) / 2 };
-    });
+      const recipesWithRatings = _.map(recipes, (item) => {
+        const averageRating = getAverageRating(item);
+        return { ...item, ratings: Math.round(averageRating * 2) / 2 };
+      });
 
-    const result = {
-      recipes: orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings,
-      recipesCount
-    }
+      const result = {
+        recipes:
+          orderBy === "rating"
+            ? _.sortBy(recipesWithRatings, "ratings")
+            : recipesWithRatings,
+        recipesCount,
+      };
 
-    return result;
-  }),
+      return result;
+    }),
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -119,10 +126,10 @@ export const recipeRouter = createTRPCRouter({
           id: input.id,
         },
         include: {
-          saves:{
-            select:{
-              authorId: true
-            }
+          saves: {
+            select: {
+              authorId: true,
+            },
           },
           ratings: {
             select: {
@@ -165,40 +172,76 @@ export const recipeRouter = createTRPCRouter({
 
       return recipe;
     }),
-    getAllByUser: publicProcedure.input(z.object({
-      authorId: z.string().default(""),
-      skip: z.number().default(0),
-      take: z.number().default(10),
-      orderBy: z.string().default("createdAt"),
-      filterByName: z.string().default(""),
-      filterByTags: z.string().default(""),
-    })).query(async ({ ctx, input }) => {
-      const {filterByName,filterByTags,orderBy,skip,take, authorId} = input
-      const recipesCount = await ctx.prisma.recipe.count({
-        where:{
-          authorId,
-          name:{
-            contains: filterByName
-          },
-          tags:{
-            contains: filterByTags
-          }
-        },
+  getAllByUser: publicProcedure
+    .input(
+      z.object({
+        authorId: z.string().default(""),
+        skip: z.number().default(0),
+        take: z.number().default(10),
+        orderBy: z.string().default("createdAt"),
+        filterByName: z.string().default(""),
+        filterByTags: z.string().default(""),
+        type: z.string().default("all"),
       })
+    )
+    .query(async ({ ctx, input }) => {
+      const {
+        filterByName,
+        filterByTags,
+        orderBy,
+        skip,
+        take,
+        type,
+        authorId,
+      } = input;
+      const whereQuery =
+        type === "all"
+          ? {
+              OR: [
+                { authorId },
+                {
+                  saves: {
+                    some: {
+                      authorId,
+                    },
+                  },
+                },
+              ],
+            }
+          : type === "mine"
+          ? { authorId }
+          : {
+              saves: {
+                some: {
+                  authorId,
+                },
+              },
+            };
+      const recipesCount = await ctx.prisma.recipe.count({
+        where: {
+          ...whereQuery,
+          name: {
+            contains: filterByName,
+          },
+          tags: {
+            contains: filterByTags,
+          },
+        },
+      });
       const recipes = await ctx.prisma.recipe.findMany({
         take: take,
         skip: skip,
-        where:{
-          authorId,
-          name:{
-            contains: filterByName
+        where: {
+          ...whereQuery,
+          name: {
+            contains: filterByName,
           },
-          tags:{
-            contains: filterByTags
-          }
+          tags: {
+            contains: filterByTags,
+          },
         },
         orderBy: {
-          createdAt: 'desc' 
+          createdAt: "desc",
         },
         include: {
           ratings: {
@@ -211,19 +254,40 @@ export const recipeRouter = createTRPCRouter({
               ratings: true,
             },
           },
+          saves: {
+            where: {
+              ...(type === "all" || type === "saved" ? { authorId } : {}),
+            },
+          },
         },
       });
-  
+
       const recipesWithRatings = _.map(recipes, (item) => {
         const averageRating = getAverageRating(item);
         return { ...item, ratings: Math.round(averageRating * 2) / 2 };
       });
-  
+
       const result = {
-        recipes: orderBy === "rating" ? _.sortBy(recipesWithRatings, "ratings") : recipesWithRatings,
-        recipesCount
-      }
-  
+        recipes:
+          orderBy === "rating"
+            ? _.sortBy(recipesWithRatings, "ratings")
+            : recipesWithRatings,
+        recipesCount,
+      };
+
       return result;
+    }),
+    delete: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.recipe.delete({
+        where: {
+          id: input.id
+        }
+      })
     }),
 });

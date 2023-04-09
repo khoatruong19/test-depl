@@ -46,6 +46,7 @@ const MyRecipes = () => {
     orderBy: (router.query.orderBy as string) ?? "createdAt",
     filterByTags: (router.query.tags as string) ?? "",
     filterByName: (router.query.name as string) ?? "",
+    type: selectOption.value
   });
   return (
     <>

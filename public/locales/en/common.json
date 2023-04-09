@@ -31,9 +31,12 @@
     "commentPlaceholder": "Write your comment...",
     "createCommentSuccessfully": "Comment successfully",
     "deleteCommentSuccessfully": "Comment deleted",
+    "deleteRecipeSuccessfully": "Recipe deleted",
+    "deleteCrecipe": "Delete Crecipe",
     "rateSuccessfully": "Rate successfully",
     "createRecipeSuccessfully": "Recipe created successfully",
     "notAuthenticated": "Not authenticated. Please login if you haven't yet",
     "recipeSaved": "Recipe saved",
-    "recipeUnSaved": "Recipe unsaved"
+    "recipeUnSaved": "Recipe unsaved",
+    "fillAll": "Please fill all the fields"
 }

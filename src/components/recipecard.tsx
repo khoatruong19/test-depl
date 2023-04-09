@@ -31,7 +31,7 @@ const RecipeCard = ({ recipe }: IProps) => {
   const ctx = api.useContext();
 
   const handleToggleSave = () => {
-    if (!user.isSignedIn) return alert("Not authenticated");
+    if (!user.isSignedIn) return toast.error(t("notAuthenticated"));
     toggleSave(
       { authorId: user.user.id, recipeId: recipe.id },
       {

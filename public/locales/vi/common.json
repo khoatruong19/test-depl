@@ -31,9 +31,12 @@
     "commentPlaceholder": "Bạn nghĩ gì...",
     "createCommentSuccessfully": "Đã thêm bình luận",
     "deleteCommentSuccessfully": "Đã xóa bình luận",
+    "deleteRecipeSuccessfully": "Đã xóa công thức",
+    "deleteCrecipe": "Xóa công thức",
     "rateSuccessfully": "Đánh giá thành công",
     "createRecipeSuccessfully": "Tạo công thức thành công",
     "notAuthenticated": "Xác thực thất bại. Hãy đăng nhập nếu chưa",
     "recipeSaved": "Đã lưu công thức",
-    "recipeUnSaved": "Bỏ lưu công thức"
+    "recipeUnSaved": "Bỏ lưu công thức",
+    "fillAll": "Vui lòng điền đủ thông tin"
 }
