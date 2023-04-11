@@ -49,7 +49,7 @@ const RecipeCard = ({ recipe }: IProps) => {
   return (
     <div className="relative">
       <Link href={`/recipe/${recipe.id}`}>
-        <div className="group w-[100%] cursor-pointer">
+        <div className="group mx-auto w-[80%] sm:w-[100%] cursor-pointer">
           <div className="relative flex items-center justify-center rounded-2xl border-2  border-secondaryColor/30 px-3 py-6">
             <div className="z-1 img-container h-[200px] w-[200px] rounded-md group-hover:scale-110">
               <img src={recipe.image ?? Pizza} alt="" />
@@ -73,7 +73,7 @@ const RecipeCard = ({ recipe }: IProps) => {
       </Link>
       <div
         onClick={handleToggleSave}
-        className="absolute right-4 top-4 z-[9999] cursor-pointer rounded-3xl bg-secondaryColor/30 p-3 hover:bg-secondaryColor"
+        className="absolute right-12 sm:right-3 md:right-4 top-2 md:top-4 z-[9999] cursor-pointer rounded-3xl bg-secondaryColor/30 p-3 hover:bg-secondaryColor"
       >
         {savedByCurrentUser ? (
           <HeaerIconSolid className={`h-7 w-7 text-primaryColor `} />

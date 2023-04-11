@@ -97,7 +97,7 @@ const RecipeFilter = () => {
     <div className="relative">
       <div
         onClick={() => setOpenFilter((prev) => !prev)}
-        className="flex w-44 cursor-pointer items-center justify-between rounded-lg bg-primaryColor px-3 py-2.5 text-white hover:bg-red-400"
+        className="flex w-28 md:w-44 cursor-pointer items-center justify-between rounded-lg bg-primaryColor px-3 py-2.5 text-white hover:bg-red-400"
       >
         <span className="text-xl font-semibold">{t("filterLabel")}</span>
         <FunnelIcon className="h-5 w-5" />
@@ -105,7 +105,7 @@ const RecipeFilter = () => {
       {openFilter && (
         <div
           ref={filterRef}
-          className="absolute bottom-[-220px] right-0 z-[999999] w-[600px] rounded-md border border-primaryColor bg-white shadow-lg"
+          className="absolute bottom-[-220px] right-0 z-[999999] w-[90vw] md:w-[600px] rounded-md border border-primaryColor bg-white shadow-lg"
         >
           <div className="px-4 py-3">
             <form

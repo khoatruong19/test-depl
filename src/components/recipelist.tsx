@@ -28,13 +28,13 @@ const RecipeList = (props: IProps) => {
     <div className="min-h-[86.75vh]">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="mb-2 text-3xl font-semibold">{listTitle}</h1>
+          <h1 className="mb-0 md:mb-2 text-2xl md:text-3xl font-semibold">{listTitle}</h1>
           <p className="font-medium text-gray-600">{data.recipesCount} {t("recipesFound")}</p>
         </div>
         <RecipeFilter />
       </div>
       {isLoading && <SyncLoading />}
-      <div className="mt-10 grid grid-cols-3 gap-x-8 gap-y-10">
+      <div className="mt-10 grid sm:grid-cols-2 grid-cols-1 md:grid-cols-3 sm:gap-x-4 md:gap-x-8 gap-y-10">
         {!isLoading &&
           _.get(data, "recipes") &&
           data.recipes.map((recipe) => (

@@ -56,7 +56,7 @@ const MyRecipes = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppLayout>
-        <div className="mb-4 flex justify-center items-center text-2xl font-semibold text-gray-400">
+        <div className="mb-4 flex justify-center items-center text-lg xs:text-xl sm:text-2xl font-semibold text-gray-400">
           {options(t).map((option: Option) => (
             <div
               onClick={() => setSelectOption(option)}

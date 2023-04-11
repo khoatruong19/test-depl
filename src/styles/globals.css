@@ -15,11 +15,17 @@ body{
 }
 
 img{
-    width: 70%;
-    height: 600px;
+    width: 80%;
+    height: auto;
     object-fit: cover;
     margin: 0 auto;
     object-fit: cover;
+}
+
+@media screen and (max-width: 900px) {
+  img {
+    width: 100vw;
+  }
 }
 
 input{
@@ -74,6 +80,10 @@ input{
 
 .ql-align-center{
     text-align: center;
+}
+
+.quill{
+    padding: 0 !important;
 }
 
 h3 .ql-size-large{

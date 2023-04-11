@@ -7,6 +7,10 @@ export default {
       colors:{
         primaryColor: "#E35533",
         secondaryColor: "#2B4137"
+      },
+      screens:{
+        'xs': '400px',
+        'sm': '550px',
       }
     },
   },

@@ -26,9 +26,9 @@ const AppLayout = ({ children }: IProps) => {
     i18n.reloadResources(i18n.resolvedLanguage, ["common"]);
   }, []);
   return (
-    <div className="max-w-[1200px] mx-auto bg-white px-5">
+    <div className="max-w-[1200px] min-h-[100vh] mx-auto bg-white px-3 md:px-5">
       <Navbar toggleLanguage={onToggleLanguageClick} />
-      <div className="pt-10">
+      <div className="pt-5 md:pt-10 lg:pt-15 xl:pt-18">
         {children}
       </div>
     </div>

@@ -52,7 +52,7 @@ export const recipeRouter = createTRPCRouter({
     .input(
       z.object({
         skip: z.number().default(0),
-        take: z.number().default(10),
+        take: z.number().default(20),
         orderBy: z.string().default("createdAt"),
         filterByName: z.string().default(""),
         filterByTags: z.string().default(""),
@@ -177,7 +177,7 @@ export const recipeRouter = createTRPCRouter({
       z.object({
         authorId: z.string().default(""),
         skip: z.number().default(0),
-        take: z.number().default(10),
+        take: z.number().default(20),
         orderBy: z.string().default("createdAt"),
         filterByName: z.string().default(""),
         filterByTags: z.string().default(""),
