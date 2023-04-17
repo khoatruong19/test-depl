@@ -71,6 +71,16 @@ input{
     color: white !important;
 }
 
+.react-tagsinput > span:first-child {
+    display: flex !important;
+    gap: 10px;
+}
+
+.react-tagsinput > span:first-child > span{
+    padding: 5px;
+}
+
+
 .text-editor .ql-editor{
     min-height: 200px;
     max-height:  700px;

@@ -169,7 +169,27 @@ export const recipeRouter = createTRPCRouter({
           ...input,
         },
       });
-
+      return recipe;
+    }),
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        tags: z.string(),
+        ingredients: z.string(),
+        image: z.string(),
+        intructions: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const {id, ...rest} = input
+      const recipe = await ctx.prisma.recipe.update({
+        where: {
+          id
+        },
+        data: rest
+      })
       return recipe;
     }),
   getAllByUser: publicProcedure

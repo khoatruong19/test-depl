@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useUser } from "@clerk/nextjs";
-import { TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Comment } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import dynamic from "next/dynamic";
 import React, { useRef, useState } from "react";
@@ -129,12 +130,22 @@ const RecipeDetail = ({ id }: IProps) => {
         ) : (
           <div className="relative">
             {user && user.id === recipe.authorId && (
-              <div
-                onClick={handleDeleteRecipe}
-                className="absolute right-0 top-0 flex cursor-pointer items-center gap-2 rounded-md border-2 border-primaryColor p-2 font-semibold text-primaryColor hover:bg-primaryColor hover:text-white"
-              >
-                <TrashIcon className="h-4 w-4" />
-                <span>{t("deleteCrecipe")}</span>
+              <div className="absolute right-0 top-0 flex flex-col gap-3">
+                <div
+                  onClick={handleDeleteRecipe}
+                  className=" flex cursor-pointer items-center gap-2 rounded-md border-2 border-primaryColor p-2 font-semibold text-primaryColor hover:bg-primaryColor hover:text-white"
+                >
+                  <TrashIcon className="h-4 w-4" />
+                  <span>{t("deleteCrecipe")}</span>
+                </div>
+                <div
+                  onClick={() => window.location.pathname = `update-recipe/${recipe.id}`}
+                  className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-secondaryColor p-2 font-semibold text-secondborder-secondaryColor hover:bg-secondaryColor hover:text-white"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                  <span>{t("updateRecipe")}</span>
+                </div>
+              
               </div>
             )}
             <h1 className="mb-5 text-center text-4xl font-bold">
