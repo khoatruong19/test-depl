@@ -42,5 +42,7 @@
     "notAuthenticated": "Not authenticated. Please login if you haven't yet",
     "recipeSaved": "Recipe saved",
     "recipeUnSaved": "Recipe unsaved",
-    "fillAll": "Please fill all the fields"
+    "fillAll": "Please fill all the fields",
+    "contactUs": "Contact Us",
+    "call": "Call"
 }

@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const AppLayout = ({ children }: IProps) => {
-  const {i18n} = useTranslation("common");
+  const {t,i18n} = useTranslation("common");
 
   const router = useRouter();
 
@@ -26,10 +26,17 @@ const AppLayout = ({ children }: IProps) => {
     i18n.reloadResources(i18n.resolvedLanguage, ["common"]);
   }, []);
   return (
-    <div className="max-w-[1200px] min-h-[100vh] mx-auto bg-white px-3 md:px-5">
-      <Navbar toggleLanguage={onToggleLanguageClick} />
-      <div className="pt-5 md:pt-10 lg:pt-15 xl:pt-18">
-        {children}
+    <div className="max-w-[1200px] min-h-[100vh] mx-auto">
+      <div className="bg-white px-3 md:px-5">
+        <Navbar toggleLanguage={onToggleLanguageClick} />
+        <div className="pt-5 md:pt-10 lg:pt-15 xl:pt-18">
+          {children}
+        </div>
+      </div>
+      <div className="pb-5 pt-3 bg-primaryColor text-white text-center">
+        <h1 className="text-4xl font-bold mb-2">{t("contactUs")}</h1>
+        <p><span className="font-semibold">{t("call")}:</span> +84 777520337</p>
+        <p><span className="font-semibold">Email:</span> khoa.truongthdk@hcmut.edu.vn</p>
       </div>
     </div>
   );
