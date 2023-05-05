@@ -37,7 +37,7 @@ const AppLayout = ({ children }: IProps) => {
         <h1 className="text-4xl font-bold mb-2">{t("contactUs")}</h1>
         <p><span className="font-semibold">{t("call")}:</span> +84 777520337</p>
         <p><span className="font-semibold">Email:</span> khoa.truongthdk@hcmut.edu.vn</p>
-        <button className="mt-3 px-2 py-1 border-2 border-white font-semibold rounded-md hover:bg-white hover:text-primaryColor ">{t("report")}</button>
+        <button onClick={() => router.push("/report")} className="mt-3 px-2 py-1 border-2 border-white font-semibold rounded-md hover:bg-white hover:text-primaryColor ">{t("report")}</button>
       </div>
     </div>
   );
