@@ -29,7 +29,10 @@ const config = {
     ignoreDuringBuilds: true,
   },
   env:{
-    IMAGE_UPLOAD_URL: process.env.IMAGE_UPLOAD_URL
+    IMAGE_UPLOAD_URL: process.env.IMAGE_UPLOAD_URL,
+    DATABASE_URL: process.env.DATABASE_URL,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    IMAGE_UPLOAD_URL: process.env.IMAGE_UPLOAD_URL,
   }
 };
 export default config;
